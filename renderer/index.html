@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Salon — Registo Diário</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- CSS (split into smaller files) -->
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
+    <link rel="stylesheet" href="./css/team.css" />
+    <link rel="stylesheet" href="./css/utilities.css" />
+
+    <!-- Firebase compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Config Firebase (compat, attaches window.firebaseAuth / window.firebaseDB) -->
+    <script src="./firebase-config.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="app-header header-grid">
+      <!-- LEFT: selectors -->
+      <div class="header-left">
+        <div class="field">
+          <label>Salão</label>
+          <select id="salonSelect" class="select">
+            <option value="s01">Mira Maia</option>
+            <option value="s02">Póvoa de Varzim</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Rececionista</label>
+          <select id="deskSelect" class="select"></select>
+        </div>
+      </div>
+
+      <!-- CENTER: close button (centered) -->
+      <div class="header-center">
+        <button id="closeBtn" class="btn btn-danger btn-icon" title="Fechar">✕</button>
+      </div>
+
+      <!-- RIGHT: (empty spacer for symmetry) -->
+      <div class="header-right"></div>
+    </header>
+
+    <!-- Main content -->
+    <main class="app-main">
+      <section class="group">
+        <div class="group-title">
+          <h2>Cabeleireiras</h2>
+          <button id="addHairBtn" class="btn btn-ghost btn-icon" title="Adicionar cabeleireira">＋</button>
+        </div>
+        <div id="hairdressersRow" class="h-scroll"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-title">
+          <h2>Barbeiros</h2>
+          <button id="addBarberBtn" class="btn btn-ghost btn-icon" title="Adicionar barbeiro">＋</button>
+        </div>
+        <div id="barbersRow" class="h-scroll"></div>
+      </section>
+
+      <section class="group">
+        <div class="group-title">
+          <h2>Esteticistas</h2>
+          <button id="addBeautBtn" class="btn btn-ghost btn-icon" title="Adicionar esteticista">＋</button>
+        </div>
+        <div id="beauticiansRow" class="h-scroll"></div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <button id="manageTeamBtn" class="btn">Gerir equipa</button>
+      </div>
+      <div class="footer-right">
+        <button id="infoBtn" class="btn btn-ghost">Info</button>
+        <button id="sendBtn" class="btn btn-primary">Enviar</button>
+      </div>
+    </footer>
+
+    <!-- Reusable modal -->
+    <div id="modal" class="modal">
+      <div class="modalContent">
+        <div class="modalHeader">
+          <h3 id="modalTitle">Modal</h3>
+          <button id="modalClose" class="iconBtn" title="Fechar">✕</button>
+        </div>
+        <div id="modalBody" class="modalBody"></div>
+        <div id="modalFooter" class="modalFooter"></div>
+      </div>
+    </div>
+
+    <!-- Login modal (PC por salão) -->
+    <div id="loginModal" class="modal">
+      <div class="modalContent">
+        <div class="modalHeader">
+          <h3 id="loginTitle">Iniciar sessão</h3>
+          <button id="loginClose" class="iconBtn" title="Fechar">✕</button>
+        </div>
+        <form id="loginForm" class="modalBody">
+          <div style="display:grid; gap:10px;">
+            <label style="display:grid; gap:6px;">
+              <span style="color:#94a3b8; font-size:12px;">Email do PC</span>
+              <input id="loginEmail" class="select" type="email" readonly />
+            </label>
+            <label style="display:grid; gap:6px;">
+              <span style="color:#94a3b8; font-size:12px;">Palavra-passe</span>
+              <input id="loginPassword" class="select" type="password" placeholder="••••••••" required />
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; color:#94a3b8;">
+              <input id="loginRemember" type="checkbox" checked />
+              Lembrar neste PC
+            </label>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:6px;">
+              <button type="button" id="loginCancel" class="btn">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Entrar</button>
+            </div>
+            <div id="loginError" style="color:#ef4444; font-size:13px; display:none;"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Entry point -->
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
